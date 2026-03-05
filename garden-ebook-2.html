@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Garden of Your Heart</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --parchment: #EDE5D4;
+    --deep-green: #2C4A35;
+    --sage: #6B8F71;
+    --moss: #4A6741;
+    --terracotta: #C4714A;
+    --gold: #B8943F;
+    --dark: #1C2B20;
+    --text: #2A2A2A;
+    --light-sage: #D4E4D6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--deep-green);
+    font-family: 'Lora', Georgia, serif;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(28, 43, 32, 0.95);
+    backdrop-filter: blur(8px);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(107,143,113,0.3);
+  }
+
+  .nav-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--light-sage);
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* PAGE WRAPPER */
+  .book {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* COVER */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 50% 30%, rgba(107,143,113,0.15) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(184,148,63,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 70%, rgba(74,103,65,0.12) 0%, transparent 60%);
+  }
+
+  /* SVG botanical decorations */
+  .botanical-top {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    opacity: 0.25;
+  }
+
+  .botanical-bottom {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    opacity: 0.25;
+    transform: rotate(180deg);
+  }
+
+  .cover-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #F0C84A;
+    margin-bottom: 32px;
+    position: relative;
+    animation: fadeUp 1s ease both;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+  }
+
+  .cover-tag::before, .cover-tag::after {
+    content: '— ';
+    opacity: 0.6;
+  }
+  .cover-tag::after { content: ' —'; }
+
+  .cover h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.08;
+    margin-bottom: 12px;
+    position: relative;
+    animation: fadeUp 1s 0.2s ease both;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.9), 0 4px 20px rgba(0,0,0,0.7), 0 0 40px rgba(0,0,0,0.5);
+  }
+
+  .cover h1 em {
+    font-style: italic;
+    color: #F0C84A;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.9), 0 4px 20px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.5);
+  }
+
+  .cover-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    color: #ffffff;
+    margin-bottom: 60px;
+    letter-spacing: 0.04em;
+    animation: fadeUp 1s 0.4s ease both;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 3px 12px rgba(0,0,0,0.7);
+  }
+
+  .cover-divider {
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    margin: 0 auto 60px;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+
+  .toc {
+    animation: fadeUp 1s 0.8s ease both;
+    text-align: left;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(240,200,74,0.35);
+    border-radius: 2px;
+    padding: 32px 40px;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .toc-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #F0C84A;
+    margin-bottom: 20px;
+  }
+
+  .toc a {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    transition: color 0.3s;
+  }
+
+  .toc a:last-child { border-bottom: none; }
+  .toc a:hover { color: var(--gold); }
+
+  .toc-num {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--sage);
+    min-width: 28px;
+  }
+
+  /* SECTION / CHAPTER PAGES */
+  .section {
+    background: var(--cream);
+    margin: 4px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Chapter header */
+  .chapter-header {
+    background: var(--dark);
+    padding: 120px 60px 80px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .chapter-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 70% 60% at 50% 40%, rgba(74,103,65,0.3) 0%, transparent 70%);
+  }
+
+  .chapter-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .chapter-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    color: var(--cream);
+    line-height: 1.1;
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .chapter-title em { color: var(--gold); font-style: italic; }
+
+  .chapter-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--light-sage);
+    position: relative;
+  }
+
+  .chapter-leaf {
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    opacity: 0.06;
+    width: 300px;
+  }
+
+  /* BODY CONTENT */
+  .chapter-body {
+    padding: 70px 70px 90px;
+    background: var(--cream);
+    position: relative;
+  }
+
+  .chapter-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 70px;
+    right: 70px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--sage), transparent);
+    opacity: 0.4;
+  }
+
+  /* INTRO section (no chapter header) */
+  .intro-header {
+    background: var(--dark);
+    padding: 130px 60px 90px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(107,143,113,0.18) 0%, transparent 70%);
+  }
+
+  .intro-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .intro-headline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--cream);
+    line-height: 1.3;
+    max-width: 620px;
+    margin: 0 auto 16px;
+    position: relative;
+  }
+
+  /* TYPOGRAPHY */
+  p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #2A2A2A;
+    margin-bottom: 1.5rem;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--deep-green);
+    margin: 2.8rem 0 1rem;
+    line-height: 1.3;
+  }
+
+  h3.gold { color: var(--terracotta); }
+
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 3px solid var(--gold);
+    padding: 20px 28px;
+    margin: 2.5rem 0;
+    background: rgba(44,74,53,0.05);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--deep-green);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* VERSE */
+  .verse {
+    text-align: center;
+    padding: 28px 20px;
+    margin: 2.5rem 0;
+    border-top: 1px solid rgba(184,148,63,0.3);
+    border-bottom: 1px solid rgba(184,148,63,0.3);
+  }
+
+  .verse p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--deep-green);
+    margin-bottom: 6px;
+  }
+
+  .verse .ref {
+    font-size: 0.82rem;
+    letter-spacing: 0.15em;
+    color: var(--sage);
+    font-style: normal;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* BULLET LIST */
+  ul.garden-list {
+    list-style: none;
+    margin: 1.5rem 0 2rem;
+    padding: 0;
+  }
+
+  ul.garden-list li {
+    padding: 10px 0 10px 32px;
+    border-bottom: 1px solid rgba(107,143,113,0.15);
+    position: relative;
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: #2A2A2A;
+  }
+
+  ul.garden-list li:last-child { border-bottom: none; }
+
+  ul.garden-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 6px;
+    color: var(--gold);
+    font-size: 0.55rem;
+    top: 14px;
+  }
+
+  /* NUMBERED STEPS */
+  .steps {
+    counter-reset: steps;
+    margin: 2rem 0;
+  }
+
+  .step {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 2rem;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: var(--deep-green);
+    color: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+
+  .step-content h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--deep-green);
+    margin-bottom: 8px;
+  }
+
+  .step-content p { margin-bottom: 0.8rem; font-size: 1rem; }
+
+  /* CONDITION CARDS */
+  .condition-card {
+    background: var(--parchment);
+    border: 1px solid rgba(107,143,113,0.2);
+    padding: 28px 32px;
+    margin: 1.5rem 0;
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .condition-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--deep-green);
+    border-radius: 2px 0 0 2px;
+  }
+
+  .condition-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--deep-green);
+    margin-bottom: 10px;
+  }
+
+  .condition-card p { font-size: 1rem; margin-bottom: 0.7rem; }
+  .condition-card p:last-child { margin-bottom: 0; }
+
+  /* CHALLENGE BOX */
+  .challenge {
+    background: var(--deep-green);
+    color: var(--cream);
+    padding: 36px 40px;
+    margin: 2.5rem 0;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .challenge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 80% 50%, rgba(107,143,113,0.2) 0%, transparent 70%);
+  }
+
+  .challenge-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .challenge h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--cream);
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .challenge p {
+    color: var(--light-sage);
+    font-size: 1rem;
+    position: relative;
+    margin-bottom: 0.8rem;
+  }
+
+  .challenge p:last-child { margin-bottom: 0; }
+
+  /* REWARD / SPECIAL CALLOUT */
+  .reward {
+    border: 1px solid var(--gold);
+    padding: 28px 36px;
+    margin: 2.5rem 0;
+    position: relative;
+    background: rgba(184,148,63,0.04);
+  }
+
+  .reward::before {
+    content: '✦ Reward ✦';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--cream);
+    padding: 0 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  /* SECTION BREAK */
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 3rem 0;
+  }
+
+  .section-break::before, .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(107,143,113,0.4));
+  }
+
+  .section-break::after {
+    background: linear-gradient(to left, transparent, rgba(107,143,113,0.4));
+  }
+
+  .section-break span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--sage);
+    opacity: 0.7;
+  }
+
+  /* GARDEN METAPHOR highlight */
+  .garden-highlight {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--moss);
+    display: block;
+    text-align: center;
+    margin: 2rem 0;
+    padding: 0 40px;
+    line-height: 1.5;
+  }
+
+  /* NEXT CHAPTER TEASER */
+  .next-chapter {
+    background: var(--dark);
+    padding: 40px 60px;
+    text-align: center;
+    border-top: 1px solid rgba(107,143,113,0.2);
+  }
+
+  .next-chapter p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--sage);
+    margin-bottom: 0;
+  }
+
+  .next-chapter a {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 10px 32px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 1px;
+  }
+
+  .next-chapter a:hover {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  /* CLOSING */
+  .closing {
+    background: var(--dark);
+    padding: 90px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(107,143,113,0.15) 0%, transparent 70%);
+  }
+
+  .closing h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    color: var(--cream);
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .closing p {
+    color: var(--light-sage);
+    max-width: 560px;
+    margin: 0 auto 1rem;
+    font-size: 1.05rem;
+    position: relative;
+  }
+
+  .closing .sign-off {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--gold);
+    margin-top: 40px;
+    position: relative;
+  }
+
+  /* LEAF SVG */
+  .leaf-divider {
+    text-align: center;
+    margin: 2rem 0;
+    opacity: 0.5;
+  }
+
+  /* scroll reveal animation */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    nav { padding: 12px 20px; }
+    .nav-links { gap: 14px; }
+    .chapter-body { padding: 50px 28px 70px; }
+    .chapter-header { padding: 100px 28px 60px; }
+    .intro-header { padding: 100px 28px 60px; }
+    .closing { padding: 60px 28px; }
+    .next-chapter { padding: 32px 28px; }
+    .challenge { padding: 28px 24px; }
+    .cover { padding: 100px 24px 60px; }
+    .toc { padding: 24px 24px; }
+  }
+
+  strong { color: var(--deep-green); font-weight: 600; }
+
+  /* ASSESSMENT GRID */
+  .assessment {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 2rem 0;
+  }
+
+  @media (max-width: 600px) { .assessment { grid-template-columns: 1fr; } }
+
+  .assessment-item {
+    background: var(--parchment);
+    padding: 20px 22px;
+    border-radius: 2px;
+    border: 1px solid rgba(107,143,113,0.15);
+  }
+
+  .assessment-item h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: var(--deep-green);
+    margin-bottom: 8px;
+  }
+
+  .assessment-item p { font-size: 0.92rem; margin: 0; line-height: 1.6; }
+
+  /* SEASON CARDS */
+  .season-row {
+    display: flex;
+    gap: 12px;
+    margin: 1.5rem 0;
+  }
+
+  .season-card {
+    flex: 1;
+    padding: 18px 16px;
+    border-radius: 2px;
+    text-align: center;
+  }
+
+  .season-card.winter { background: rgba(44,74,53,0.08); border: 1px solid rgba(107,143,113,0.2); }
+  .season-card.summer { background: rgba(184,148,63,0.08); border: 1px solid rgba(184,148,63,0.25); }
+
+  .season-card .icon { font-size: 1.6rem; margin-bottom: 8px; }
+
+  .season-card p { font-size: 0.9rem; margin: 0; line-height: 1.55; }
+
+  @media (max-width: 520px) { .season-row { flex-direction: column; } }
+
+  /* HARVEST list */
+  .harvest-list {
+    columns: 2;
+    column-gap: 32px;
+    margin: 1.5rem 0;
+  }
+
+  @media (max-width: 560px) { .harvest-list { columns: 1; } }
+
+  .harvest-list li {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 8px;
+    break-inside: avoid;
+    padding-left: 20px;
+    position: relative;
+    list-style: none;
+    color: #2A2A2A;
+  }
+
+  .harvest-list li::before {
+    content: '🌿';
+    position: absolute;
+    left: -2px;
+    font-size: 0.7rem;
+    top: 5px;
+  }
+
+  /* Summary cards */
+  .summary-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 2rem 0;
+  }
+
+  .summary-card {
+    background: var(--parchment);
+    border-left: 4px solid var(--sage);
+    padding: 20px 24px;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .summary-card h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--deep-green);
+    margin-bottom: 8px;
+  }
+
+  .summary-card p { font-size: 0.97rem; margin: 0; }
+
+  /* Parable soil */
+  .soil-items {
+    margin: 1rem 0;
+  }
+
+  .soil-item {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(107,143,113,0.15);
+    align-items: flex-start;
+  }
+
+  .soil-item:last-child { border-bottom: none; }
+
+  .soil-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .soil-item p { margin: 0; font-size: 1rem; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-title">The Garden of Your Heart</span>
+  <ul class="nav-links">
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#ch1">Ch. 1</a></li>
+    <li><a href="#ch2">Ch. 2</a></li>
+    <li><a href="#ch3">Ch. 3</a></li>
+  </ul>
+</nav>
+
+<!-- COVER -->
+<div class="book">
+<section class="cover section">
+  <div class="cover-bg"></div>
+
+  <div class="botanical-top">
+    <svg width="340" height="90" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M170 80 C170 80 120 60 80 30 C60 15 40 5 10 2" stroke="#6B8F71" stroke-width="1.5" fill="none"/>
+      <path d="M170 80 C170 80 220 60 260 30 C280 15 300 5 330 2" stroke="#6B8F71" stroke-width="1.5" fill="none"/>
+      <ellipse cx="80" cy="30" rx="22" ry="12" transform="rotate(-30 80 30)" fill="#4A6741" opacity="0.5"/>
+      <ellipse cx="260" cy="30" rx="22" ry="12" transform="rotate(30 260 30)" fill="#4A6741" opacity="0.5"/>
+      <ellipse cx="110" cy="52" rx="16" ry="9" transform="rotate(-20 110 52)" fill="#6B8F71" opacity="0.4"/>
+      <ellipse cx="230" cy="52" rx="16" ry="9" transform="rotate(20 230 52)" fill="#6B8F71" opacity="0.4"/>
+      <ellipse cx="50" cy="18" rx="12" ry="7" transform="rotate(-45 50 18)" fill="#4A6741" opacity="0.35"/>
+      <ellipse cx="290" cy="18" rx="12" ry="7" transform="rotate(45 290 18)" fill="#4A6741" opacity="0.35"/>
+      <circle cx="170" cy="82" r="4" fill="#B8943F" opacity="0.6"/>
+    </svg>
+  </div>
+
+  <div class="botanical-bottom">
+    <svg width="340" height="90" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M170 80 C170 80 120 60 80 30 C60 15 40 5 10 2" stroke="#6B8F71" stroke-width="1.5" fill="none"/>
+      <path d="M170 80 C170 80 220 60 260 30 C280 15 300 5 330 2" stroke="#6B8F71" stroke-width="1.5" fill="none"/>
+      <ellipse cx="80" cy="30" rx="22" ry="12" transform="rotate(-30 80 30)" fill="#4A6741" opacity="0.5"/>
+      <ellipse cx="260" cy="30" rx="22" ry="12" transform="rotate(30 260 30)" fill="#4A6741" opacity="0.5"/>
+      <circle cx="170" cy="82" r="4" fill="#B8943F" opacity="0.6"/>
+    </svg>
+  </div>
+
+  <span class="cover-tag">A Mini Ebook</span>
+  <h1>The Garden of<br><em>Your Heart</em></h1>
+  <p class="cover-subtitle">Weeding, Planting & Growing the Life You Were Made For</p>
+
+  <div class="cover-divider"></div>
+
+  <div class="toc">
+    <div class="toc-label">Contents</div>
+    <a href="#intro"><span class="toc-num">00</span>Introduction — Hey There</a>
+    <a href="#ch1"><span class="toc-num">01</span>Weed Work — Identifying What's Choking Your Potential</a>
+    <a href="#ch2"><span class="toc-num">02</span>Seed Selection — What Truly Deserves Your Attention</a>
+    <a href="#ch3"><span class="toc-num">03</span>Growing Conditions — Creating the Optimal Environment</a>
+  </div>
+</section>
+
+
+<!-- INTRODUCTION -->
+<section id="intro" class="section">
+  <div class="intro-header">
+    <p class="intro-eyebrow">Introduction</p>
+    <h2 class="intro-headline">"Is this really all there is to life?"</h2>
+  </div>
+
+  <div class="chapter-body">
+    <p>Hey there! Let's talk about something real for a minute.</p>
+    <p>You know that feeling when your alarm goes off in the morning? That split second before the day crashes in? What's running through your mind in that moment? Are you excited about what's ahead? Or are you already exhausted just thinking about it?</p>
+    <p>If you're feeling more "here we go again" than "let's do this!"—trust me, you're not the only one. So many of us have done everything "right" on paper. College degree? Check. Career? Check. Relationships? Check. Yet something still feels... off. The days start blurring together. Weekends fly by in a blink. And that promotion you worked so hard for? Yeah, it didn't fill that weird empty space like you thought it would.</p>
+    <p>And maybe, in those quiet moments when no one's watching, you find yourself wondering:</p>
+
+    <div class="pull-quote">
+      <p>"Is this really all there is to life?"</p>
+    </div>
+
+    <p>First off, I want you to know something important: feeling this way doesn't mean you're ungrateful or broken. It means you're awake. It means there's a part of you that remembers you were made for more than just checking boxes and collecting paychecks.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>What's Really Going On Here</h3>
+    <p>Here's what I've discovered in my own messy, beautiful journey: that disconnect you're feeling—that gap between your "successful" life and your fulfilled life—it comes from neglecting the richest soil you'll ever tend: the garden of your heart.</p>
+    <p>Oh man! That sounds extremely cheesy—"the garden of your heart"! I have a confession: my capacity for clever and inspirational titles is inspired by movies from the 80s. Sadly, we must both suffer cheesy lines throughout this book, but my guarantee to you is that each page flip will leave you glad and impressed with the value you're receiving. And I have every intention of keeping my word.</p>
+    <p>Think about it like this. When you leave a garden untended, it doesn't just stay the same, right? It doesn't politely wait for you to return. Nope. Weeds creep in. They spread. Before you know it, they're choking out everything else.</p>
+    <p>Our inner worlds work exactly the same way. When we're not paying attention, those sneaky negative thoughts? They take root. Those limiting beliefs we picked up along the way? They spread like crazy. And before we realize what's happening, we're harvesting the fruit of stuff we never intentionally planted—anxiety, emptiness, that nagging feeling that we're missing something important.</p>
+    <p>But here's the good news that changed everything for me, and I believe it can for you too:</p>
+
+    <span class="garden-highlight">You get to be the gardener of your own life.</span>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>Let's Get Our Hands Dirty</h3>
+    <p>In these pages, we're going to roll up our sleeves together. No fancy theories that sound great but leave you thinking "okay, but what do I actually DO with that?" Just practical, down-to-earth ways to:</p>
+
+    <ul class="garden-list">
+      <li>Spot and pull out the weeds that have been holding you back (even the ones with pretty flowers that are secretly toxic)</li>
+      <li>Figure out which seeds really deserve your time and energy</li>
+      <li>Create the right conditions for your authentic self to thrive, no matter what season you're in</li>
+      <li>Recognize and celebrate the amazing fruit that starts growing when you tend your inner garden with love</li>
+    </ul>
+
+    <p>This isn't about adding another self-improvement project to your already packed to-do list. It's about getting back to the root of who you are and who you were created to be.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>What Changes When You Tend Your Garden</h3>
+    <p>I've seen it happen so many times—both in my life and in the lives of people I've walked alongside. When you start caring for what's growing inside you, the outside stuff naturally begins to shift too.</p>
+    <p>Those relationships that felt surface-level? They deepen. That work that was just a paycheck? It takes on new meaning. Opportunities that align with your authentic gifts seem to show up at just the right time. And that exhausting hustle to prove yourself? It begins to soften into a quiet confidence that comes from knowing exactly who you are and why you're here.</p>
+    <p>Put simply, you start really living instead of just existing—present in your own life, clear about your purpose, and increasingly at peace with both your journey and your destination.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>What Happens If You Do Nothing</h3>
+    <p>Look, I get it. You could totally close this book right now. Put it on your shelf with the others. Tell yourself you'll get to it "when things calm down" (spoiler alert: they never do unless you make them).</p>
+    <p>But let me share something that hit me like a ton of bricks when I first realized it: the power—and honestly, the scary part—about seeds is that they don't just grow one little fruit and call it a day. They create entire trees that produce hundreds of fruits, and each of those fruits contains more seeds.</p>
+    <p>It's exponential. It's relentless. And it works in both directions.</p>
+    <p>The longer you let things grow on autopilot, the harder it becomes to turn things around. The weeds of "I'll just get through today" and "Maybe someday things will be different" don't stay contained—they spread until they become the landscape of your entire life.</p>
+
+    <div class="verse">
+      <p>"The two most important days in anyone's life are the day one is born and the day they discover why."</p>
+      <span class="ref">— C.S. Lewis</span>
+    </div>
+
+    <p>Do not delay. Your life—and those in your world who taste of the fruit you produce—are depending on you to find and achieve what you were born for. Isn't it time you gave the world the magnificence of what's in your heart?</p>
+    <p>Please don't let the daily grind drown out that voice inside you—you know the one I'm talking about. That whisper of possibility. That nudge toward something more. That dissatisfaction that's actually trying to point you home.</p>
+    <p>Listen to it today. Listen to it now. Draw your line in the sand. This is your moment to say, "Enough with who I've been settling for. It's time to become who I was made to be."</p>
+    <p>The choice is yours. But if you're ready to wake up with purpose instead of dread, if you're tired of success that doesn't satisfy, if you're hungry for a life that feels as rich on the inside as it looks on the outside—then turn the page.</p>
+    <p>Your garden is waiting. And so is the real you.</p>
+  </div>
+
+  <div class="next-chapter">
+    <p>Continue to the first chapter</p>
+    <a href="#ch1">Chapter 1: Weed Work →</a>
+  </div>
+</section>
+
+
+<!-- CHAPTER 1 -->
+<section id="ch1" class="section">
+  <div class="chapter-header">
+    <p class="chapter-num">Chapter One</p>
+    <h2 class="chapter-title"><em>Weed Work</em></h2>
+    <p class="chapter-sub">Identifying and uprooting what's choking your potential</p>
+    <svg class="chapter-leaf" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 280 C100 280 20 200 10 120 C0 40 60 10 100 20 C140 10 200 40 190 120 C180 200 100 280 100 280Z" fill="#6B8F71"/>
+      <path d="M100 280 C100 280 100 180 100 20" stroke="#4A6741" stroke-width="2"/>
+      <path d="M100 200 C100 200 60 160 40 140" stroke="#4A6741" stroke-width="1.5"/>
+      <path d="M100 150 C100 150 140 120 155 100" stroke="#4A6741" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <div class="chapter-body">
+    <p>Let me share something that changed everything for me.</p>
+
+    <div class="verse">
+      <p>"Above ALL else, guard your heart, for everything you do flows from it."</p>
+      <span class="ref">— Proverbs 4:23</span>
+    </div>
+
+    <p>The person who said this? Solomon—widely regarded as the wisest human to ever live. Even God Himself endorsed Solomon's wisdom (and that's about as high an endorsement as anyone can hope to get, right?).</p>
+    <p>Think about that for a second. This incredibly wise king, after accumulating all the knowledge and experience a person could possibly gather, says this one thing matters more than anything else: guarding your heart.</p>
+    <p>Not "work harder." Not "network more." Not "find your passion." But guard. your. heart.</p>
+    <p>Why? Because your heart—your inner garden—is the source of everything you do. Every decision. Every relationship. Every achievement. Every failure. It all flows from what's growing inside you.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>Your Attention Is Water</h3>
+    <p>Here's something I want you to really get: your attention is like water in a garden.</p>
+    <span class="garden-highlight">Whatever you water grows. It's that simple.</span>
+    <p>When you give your attention to a thought, a feeling, or an idea—whether toxic or beneficial—you're watering it. You're helping it grow stronger roots in your garden.</p>
+    <p>This is why every business, app, and brand is fighting for your attention. They know that attention equals water for the seeds they're trying to plant in your mind. They want your water to grow what they've planted.</p>
+    <p>And they're not subtle about it. The average person now sees between 4,000 to 10,000 ads every single day. Each one is saying, "Water me! Water me!"</p>
+    <p>But here's the thing—you only have so much water to give. You can't water everything. So you've got to be selfish (in the best possible way) about what you choose to water and give your attention to.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>The Security Paradox</h3>
+    <p>Here's something crazy when you think about it:</p>
+    <p>We obsess over cybersecurity. We create complicated passwords. We pay for premium security software. We freak out if our credit card number might be compromised.</p>
+    <p>Some of us even deleted TikTok when we heard it might be sharing our data!</p>
+    <p>But let me ask you this: When was the last time you invested that same level of protection into your heart?</p>
+    <p>Be honest. Have you ever gone to great lengths—to the point where you're willing to pay hundreds or even thousands of dollars—to guard what's truly important?</p>
+    <p>The very source of meaning and purpose in your life barely gets deliberate attention, while superficial information gets your stress, anxiety, and dollars. Meanwhile, your heart—the place where your authentic purpose, unshakable happiness, and genuine drive comes from—gets choked away silently by weeds you didn't even know were taking root.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>Why Nothing Has Worked So Far</h3>
+    <p>Let me guess: You've read the self-help books. You've watched the motivational TikToks. You've subscribed to YouTube channels promising to help you have your "best year ever." Maybe you've even paid for courses or tried different techniques.</p>
+    <p>And it's not that those things don't work...it's that they never last.</p>
+    <p>Eventually, they all fall into the same bin: the "tried it and meh, nothing's changed" bin.</p>
+    <p>Here's why: your garden isn't in a position to allow new seeds to grow. The soil isn't optimal, and the weeds are refusing to allow anything new to take root. This means that no matter how many good habits, routines, or ideas you try to plant in your mind and heart, they never fully develop—and you always end up back at square one, feeling even more frustrated than before.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>First Things First: Weed Before You Plant</h3>
+    <p>Before we can plant anything new, we first need to tend to the weeds in our garden. And that starts with being able to identify what's actually growing in there.</p>
+
+    <h3 class="gold">Meditation – The Misunderstood Weed-Finder</h3>
+    <p>What if everything you know about meditation is making it harder, not easier? If you've ever tried meditating and thought, "Am I even doing this right?"—you're not alone.</p>
+    <p>Most people, even the ones teaching meditation, are probably teaching it in a way that makes it nearly impossible to succeed.</p>
+    <p>You sit down, close your eyes, try to "clear your mind"... but instead, your thoughts get louder. "Why is this so hard?" "Am I doing this wrong?" "I don't have time for this."</p>
+    <p>Here's the truth: You're not failing at meditation. You've just been taught the wrong idea of what it actually is.</p>
+
+    <div class="pull-quote">
+      <p>The biggest misconception about meditation is that it's about emptying your mind or detaching from thoughts. That's completely backward. Meditation is actually the opposite. It's about immersion.</p>
+    </div>
+
+    <p>Your thoughts aren't distractions. They're the key to understanding what's growing in your garden.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>Let's Try Something Different: The IMMERSE Method™</h3>
+    <p>Let's break down a simpler way to approach meditation as a weed-finding tool:</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Identify Why We Meditate</h4>
+          <p>The most valuable thing you have in life is your attention. And everything and everyone wants a piece of it.</p>
+          <p>Your past regrets? They want your attention. Your team's expectations? They want your attention. Your relationships? Want your attention. Your fears, anxieties, to-do lists? All screaming for your attention.</p>
+          <p>But what's the one voice you can barely hear through all this noise? Your own.</p>
+          <p>That quiet, precise guidance inside you—the one that says: "You're enough." "You can do this." "Go left instead of right."</p>
+          <p>Top performers consistently report that their biggest breakthroughs came from trusting their intuition. But to trust yourself, you have to hear yourself first. And that's why we meditate.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Map Your Thoughts (Weed Identification)</h4>
+          <p>Let's try something right now. I want you to close your eyes for just 60 seconds.</p>
+          <p>Once they're closed, don't try to clear your mind. Instead, when a thought comes, simply label it:</p>
+          <ul class="garden-list">
+            <li>"Why am I even doing this?" → Skepticism</li>
+            <li>"I should be working..." → Pressure</li>
+            <li>"Did I lock the door?" → Distraction</li>
+          </ul>
+          <p>Now—open your eyes.</p>
+          <p>What just happened? You became an observer instead of just a participant in your thoughts.</p>
+          <p>Notice how I didn't ask you to empty your mind? That's because most meditation techniques fail by fighting against your brain's natural function.</p>
+          <p>This is why meditation feels frustrating at first. Your mind is used to getting carried away by every thought, so when you try to sit still, it fights back.</p>
+          <p>But the trick isn't to resist the thoughts—it's to dive in. This is how we can identify seeds that have taken root in our mind.</p>
+          <p>Meditation and the refusal to judge or be driven by thoughts—but simply label them—is how we give attention to our own garden and observe what's actually growing there. We don't want to just destroy everything. We want to take time to truly observe, searching for the weeds and toxic elements that impede growth in our garden.</p>
+          <p>Think of yourself as a gardener walking through your garden with a notepad, simply taking inventory before making any changes. "Ah, there's some anxiety growing over here... and look, some perfectionism over there... oh, and there's some imposter syndrome creeping in around the edges."</p>
+          <p>This weeding process isn't a one-and-done thing. Remember, the garden is something you actively guard and protect, and that means taking inventory on a regular basis of what might be deciding to take root in your soil. Meditate and label the thoughts that come—the more you do this, the better and clearer what is taking root will become.</p>
+        </div>
+      </div>
+
+      <div class="reward">
+        <p>A Reward for Your Journey So Far</p>
+        <p>Hey, you've stuck with me this far, which tells me you're serious about transforming your garden. So I want to give you a bonus—another incredibly powerful way to use meditation in your day-to-day life. Consider this your reward for investing in yourself already.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Master Real-World Application</h4>
+          <p>Most people rush to solve things. They stress, overthink, and panic.</p>
+          <p>But the secret to better decisions? Spend more time understanding the problem than rushing to fix it.</p>
+          <p>Albert Einstein once said that if he had an hour to solve a problem, he would spend 55 minutes thinking about the problem and 5 minutes working to solve it.</p>
+          <p>Meditation trains your mind to do this automatically. Instead of reacting emotionally, you analyze:</p>
+          <ul class="garden-list">
+            <li>What am I really feeling?</li>
+            <li>What's the root issue?</li>
+            <li>What's actually in my control?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Environment Hacking</h4>
+          <p>Most people think meditation requires a silent retreat in the mountains. That's not real life.</p>
+          <p>What if I told you the noisier your environment, the more powerful your meditation can become?</p>
+          <p>Here's the hack: use technology to force immersion, even during your busiest days.</p>
+          <ul class="garden-list">
+            <li>Noise-canceling earbuds (even the small, discreet ones work)</li>
+            <li>A focused breathing playlist</li>
+            <li>Five minutes between meetings—even in your car or a quiet corner of the office</li>
+          </ul>
+          <p>MIT neuroscience research shows that even a 5-minute session reduces activity in your brain's stress center by up to 15%.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Reconnect with Scripture (For Those Who Want To)</h4>
+          <p>If faith guides your life, here's where this becomes even more powerful.</p>
+          <p>We often see the very Son of God, perfect in all ways, remove himself from everyone during the day and night to pray. Why? Wasn't he already praying and fasting enough?</p>
+          <p>The answer connects directly to what we've discussed: to stay out of your head and not operate from emotion but remain clear-minded, patient, and in complete control when making decisions.</p>
+          <p>For Christians, this meditation time becomes holy ground. Simply pray while thinking of James 1:5 (asking for wisdom) or Philippians 4:7. Lift up an upcoming meeting, a difficult coworker, or focus for a challenging task.</p>
+          <p>And as Scripture promises, "the peace of God that surpasses all understanding will guard your hearts and minds."</p>
+          <p>Jesus dealt with the same human limitations we face—people with competing needs and motives. To ensure emotions didn't control Him, He would meditate and pray even in the midst of His busiest days.</p>
+          <p>And for those of you that believe in God, the saying is this: Meet God before you meet the devil. Do not venture out into the world or reach for your phone before you have met with and spent time with the Lord.</p>
+          <p>Remember Jesus' instruction to "pray that you do not fall into temptation"—and please don't cheapen temptation to mean only doing naughty things or dropping f-bombs. In the Bible, sin is defined as "missing the mark"—falling short of the target. So pray that you do not fall into the temptation of mediocrity.</p>
+          <p>Your Father is God, King of the universe. The expectations and power placed into His children—you and me—are incalculable. This is why it is absolutely vital you meet God before you meet the devil in the world. It will help you remain in a state of excellence in all that you do.</p>
+          <p>Try it. You'll be amazed at how much more growth happens with this focused watering than with hours of scattered misting across your entire garden.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>The Deep Weed Work: Going Beyond Meditation</h3>
+    <p>Meditation is a powerful tool for identifying weeds, but sometimes we need help seeing what's truly taken root. This is why David, in Psalm 139:23, asks God to "Search me, O God, and know my heart; test me and know my anxious thoughts."</p>
+    <p>David understood something profound—sometimes the weeds are so deeply rooted that we can't even recognize them ourselves. We need divine help to truly see what's growing inside us.</p>
+
+    <div class="challenge">
+      <div class="challenge-label">Your Challenge</div>
+      <h4>Your First Weed-Work Challenge</h4>
+      <p>Now you have the tool to start identifying what's really growing in your garden. But here's my challenge to you: For the next 5 days, use the 60-second thought labeling technique before your most challenging task of the day.</p>
+      <p>Pay attention to patterns. What kinds of thoughts keep showing up? Fears? Doubts? Old stories you've been telling yourself?</p>
+      <p>These are your weeds. And now that you can see them, we can start the work of uprooting them.</p>
+      <p>Remember, this isn't just about clearing space—it's about preparing the soil for something beautiful to grow.</p>
+    </div>
+
+    <p>In the next chapter, we'll talk about how to choose the right seeds to plant once you've cleared away the weeds. And of course, I'll sneak in another helpful hack as a thank you.</p>
+    <p>I like you was once right where you are, and this worked for me—I pray it works just as well and even better for you. I'm excited to hear the stories of what truly lies in your heart. This is what the beauty of life is truly about: living to the standard of what truly hides in your heart.</p>
+  </div>
+
+  <div class="next-chapter">
+    <p>You've identified the weeds. Now it's time to choose your seeds.</p>
+    <a href="#ch2">Chapter 2: Seed Selection →</a>
+  </div>
+</section>
+
+
+<!-- CHAPTER 2 -->
+<section id="ch2" class="section">
+  <div class="chapter-header">
+    <p class="chapter-num">Chapter Two</p>
+    <h2 class="chapter-title"><em>Seed Selection</em></h2>
+    <p class="chapter-sub">Choosing what truly deserves your attention and nurturing</p>
+    <svg class="chapter-leaf" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 280 C100 280 20 200 10 120 C0 40 60 10 100 20 C140 10 200 40 190 120 C180 200 100 280 100 280Z" fill="#B8943F" opacity="0.7"/>
+      <path d="M100 280 C100 280 100 180 100 20" stroke="#8A6E2F" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <div class="chapter-body">
+    <p>As we dive into this chapter, I want you to remember something vital: The heart is the garden, the mind is simply the filter or door to what enters yours and my garden.</p>
+    <p>This is very important, so I want us to read it again together slowly. I'm bolding this not to be annoying but to help you see something important I missed and took a long time to learn. I'm writing this so you don't waste so many years of your precious life searching for this answer.</p>
+
+    <div class="pull-quote">
+      <p>The mind is NOT the heart. The mind is simply the door or filter to what is allowed to take residence in your heart.</p>
+    </div>
+
+    <p>Remember that helpful tip I was going to sneak into Chapter 2? Well, I couldn't delay not giving you something so valuable right from the start—haha, you're welcome! Poor attempts at humor aside, here is the gold: Everything and everyone that wants access to your garden has one door to enter through—your mind. Your mind controls your 5 senses, and these 5 senses are how the world interacts with you and how you express to it what's in your heart.</p>
+
+    <div class="verse">
+      <p>"Do not be conformed to this world, but be transformed by the renewal of your mind. Then you will be able to test and approve what God's will is, his good, pleasing and perfect will."</p>
+      <span class="ref">— Romans 12:2</span>
+    </div>
+
+    <p>This shows us something amazing here. The mind is the filter, and daily—regardless of how successful or perfect things are going—we actively guard our heart by renewing the mind. This means staying on top of what we expose ourselves to, not only by our ears and eyes but even the environments we allow our being to be present in.</p>
+    <p>There's nothing more frustrating than removing weeds from your garden just for some other nonsense to destroy the work you've done all because you didn't put up a fence and take measures to protect your crop. You must set a fence and check it regularly for gaps and holes—and this sounds complicated, but it's simple. Simply meditate and grow in your meditation, spending more time in that state of non-judgment, simply listening and exploring your own heart.</p>
+    <p>For those of you that believe in God, this is leagues easier for you. Pray daily and in all circumstances. Remember how Jesus said pray that you do not fall into temptation and not simply pray when you are tempted? Christ taught us the way to keeping our gate tight and sealed, and it's by prayer and the word. A natural cleansing and strengthening of the gate to your heart.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>Content Over Packaging: Choosing Seeds Wisely</h3>
+    <p>When deciding what seeds are important, we often make a mistake: we value the packaging over the content.</p>
+    <p>Think about it this way—if your best friend, meaning well, unknowingly offers you poison, you shouldn't drink it just because it came from someone you love. By that same token, if your greatest enemy offers you a nutritious gift by accident or guilt, it would be wise to accept it.</p>
+    <p>It's not the person or the package from which the seed comes—it's the content of the seed we should concern ourselves with. This is why you should regard all people as equal and not judge nor hate any person. That very hate is a seed of the sneaky variety. It's a poison not planted by an outsider but by the gardener themselves.</p>
+
+    <div class="pull-quote">
+      <p>"Anger is like drinking poison and expecting someone else to die."</p>
+    </div>
+
+    <p>We dare not waste such a limited resource like the water of our attention to nurture seeds of judgment, anger, or hatred.</p>
+    <p>The best gift we can give to the world is untainted fruit coming from the true depths of who we are. But let's not forget—just because now we know better doesn't mean we should look down on our friends and family who don't understand these things yet. This is about you, not others.</p>
+    <p>We must do what's best for the garden of your heart. But at the end of the day, a garden grows things exponentially. So if the seed you've planted is love, know this: the fruit is not only for you. The world around you will sample the things coming from your heart. This means everything you put your hands to, everything you say, the way you listen... everything will be encapsulated in this love, and it will be felt and experienced by your world.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>Finding Your Authentic Seeds</h3>
+    <p>There's so much to keep track of when selecting seeds to grow in your garden. It can quickly become overwhelming, leading to decision paralysis. So let me share how I started to approach this—I hope it helps you find clarity too.</p>
+    <p>Remember that guy Mike in middle school English? He sat front row, to the left. You didn't really notice him until your group of girlfriends started talking about how cute he was. Then, without being sure why, two months later there you are telling another friend how cute Mike from class is.</p>
+    <p>This is how it works with so many things in our lives. A lot of what you "think" you like or what you "think" are your strengths and weaknesses are often borrowed from the thoughts and opinions of others. And those thoughts they have? Also borrowed. So you're just resampling and spreading the same perspectives, ideas, and ideals over and over again.</p>
+    <p>This is how groups, cliques, and niches form. We think we're making independent choices, but we're really just echoing what's around us.</p>
+    <p>This is why meditation is vital in preparing us for this moment of seed selection. It takes effort—more at first—to truly delve into your heart and find what genuinely makes your soul spark. Without explanation. Without justification.</p>
+    <p>What are those things that light you up when no one is watching or judging—not even you?</p>
+    <p>Maybe it's certain TV shows, favorite characters in anime or Disney movies. Maybe it's understanding the motivations behind a villain's actions in a film. Those moments when something resonates so deeply that you feel truly alive.</p>
+
+    <div class="pull-quote">
+      <p>You cannot—and I repeat, you cannot—reach who's truly inside you if you're not brave enough to swim against the current. Even a fish that's dead can float with no current and no effort; it takes life and attitude to come alive and make your way where you want to be against the current.</p>
+    </div>
+
+    <p>Notice I said you need to be brave enough—it means the fear of judgment or messing up doesn't disappear or diminish. Your excuse for letting that be the reason you stay chilling and floating with the norm just gets boring, and you choose, with shaky knees and a tiny little weapon, to face the dragon that is yourself.</p>
+    <p>Look around. You know and you see that no one has all the answers. We're all dealing with the same challenges, sharing and eating the same seeds, watering the same thoughts, and harvesting the same limited fruits.</p>
+    <p>This cycle only breaks when you make a conscious effort to meditate and truly start to ask: "Who am I, really?" Not for one day. Not for one month. But as a way of life. Finding, watering, guarding, nurturing, and sharing who you really are.</p>
+
+    <div class="verse">
+      <p>"Finally, brothers and sisters, whatever is true, whatever is noble, whatever is right, whatever is pure, whatever is lovely, whatever is admirable—if anything is excellent or praiseworthy—think about such things."</p>
+      <span class="ref">— Philippians 4:8</span>
+    </div>
+
+    <p>For my fellow Christians, this is where Philippians 4:8 becomes our seed selection guide. The seeds you select and choose to water are characterized for us right there. This is where we start—and I mean start.</p>
+    <p>Remember this: there is no comparison between a wax apple and a real one aside from appearance. When the time comes to taste, there will be no competition.</p>
+    <p>The beautiful thing is that planting and watering these authentic seeds makes not just what you do valuable and stand out, but the person doing and saying it. It means whatever you choose to put your hands to in this life will be infused with authenticity, not pretense.</p>
+    <p>When people come and taste what you have built, there's no going back or creating a copycat. Wax cannot imitate the crisp sound, cool sweetness, and gentle kiss of a delicious apple.</p>
+    <p>This is how you become a person who naturally draws attention—not because you're seeking it, but because you're real. This is how you inspire and influence change just by being yourself.</p>
+    <p>It all comes down to removing the weeds, preparing the soil, setting a protective fence, and planting things that are worthy of growing in the precious garden of your heart.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>Coming Up Next...</h3>
+    <p>In the next chapter, we'll talk about creating the optimal growing conditions for these carefully selected seeds. After all, even the best seeds need the right environment to truly flourish.</p>
+    <p>In the next chapter I'll be sharing one of my favorite techniques—not for accelerating growth, because to be honest with you, it is impossible to accelerate growth. Why? Because progress when doing this right is never measured by speed but direction instead. It doesn't matter how fast you climb the ladder of success if all you find out at the top is that you had your ladder against the wrong wall.</p>
+    <p>Instead, what I'll be showing you is never about speed; it is about accuracy. I'll never promise you a fast track when it comes to your personal development because—hint—it is personal and differs based on varying factors we can explore in the future. But the quality and accuracy can be measured across the board.</p>
+    <p>And that's what I'm excited to present you with in the next chapter: quality information that, no matter how fast you understand and apply it, you can be confident you are at least climbing the correct ladder.</p>
+    <p>Remember, the garden of your heart doesn't transform overnight. But with consistent, intentional tending, it will become more beautiful and fruitful than you ever imagined possible.</p>
+
+    <div class="pull-quote">
+      <p>A Quick Note Before We Continue: please forgive me for how short this book and chapters seem. It's intentional and designed for anyone like me that wants something sensible, actionable, and measurable. But I promise I'll tackle more in future writings.</p>
+    </div>
+
+    <p>See you in Chapter 3!</p>
+  </div>
+
+  <div class="next-chapter">
+    <p>Seeds selected. Now let's create the conditions for them to thrive.</p>
+    <a href="#ch3">Chapter 3: Growing Conditions →</a>
+  </div>
+</section>
+
+
+<!-- CHAPTER 3 -->
+<section id="ch3" class="section">
+  <div class="chapter-header">
+    <p class="chapter-num">Chapter Three</p>
+    <h2 class="chapter-title"><em>Growing Conditions</em></h2>
+    <p class="chapter-sub">Creating the optimal environment for growth and harvesting your garden's fruit</p>
+    <svg class="chapter-leaf" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 280 C100 280 20 200 10 120 C0 40 60 10 100 20 C140 10 200 40 190 120 C180 200 100 280 100 280Z" fill="#C4714A" opacity="0.6"/>
+      <path d="M100 280 C100 280 100 180 100 20" stroke="#8A4A2A" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <div class="chapter-body">
+    <p>Welcome to Chapter 3! If you've made it this far, you've already done some serious gardening work. You've identified the weeds that need to be pulled, and you've carefully selected authentic seeds that resonate with who you truly are.</p>
+    <p>Now comes a part that many gardeners overlook—creating the right conditions for those seeds to thrive.</p>
+
+    <h3>The Environment Matters More Than You Think</h3>
+    <p>I used to think growth was simple: plant good seeds, water them consistently, and boom—guaranteed results.</p>
+    <p>But here's what I learned the hard way: you can have the highest quality seeds and the most diligent watering schedule, but if your environment isn't conducive to growth, those seeds will struggle.</p>
+    <p>Think about it—have you ever tried to grow something in poor soil? Or in a spot that gets too little sunlight? Or where there's no protection from harsh elements?</p>
+    <p>The same principles apply to your heart garden. Your environment—the places you go, the people you surround yourself with, the information you consume, the routines you follow—all create the conditions that either support or sabotage your growth.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>The Four Elements of Optimal Growing Conditions</h3>
+    <p>Just like plants need certain elements to thrive, the seeds in your heart garden need specific conditions to flourish. Let's break them down:</p>
+
+    <!-- ELEMENT 1: SOIL -->
+    <div class="condition-card">
+      <h4>1. The Soil: Where It All Begins</h4>
+      <p>In Matthew 13:3-8, Jesus tells a story about a farmer who went out to plant seed in his field. In this parable, we find some constants and some variables worth noting.</p>
+      <p>The constants in the story: the farmer—the person doing the planting is the same; and the seed—the type of seed being sown is the same across the board.</p>
+      <p>But the results? Dramatically different.</p>
+
+      <div class="soil-items">
+        <div class="soil-item"><span class="soil-icon">🐦</span><p>Some seed fell by a path, but birds came and ate it</p></div>
+        <div class="soil-item"><span class="soil-icon">🪨</span><p>Some fell on rocky places where the soil was shallow, so the plants sprang up quickly, but when the sun came up, they withered because they had no root</p></div>
+        <div class="soil-item"><span class="soil-icon">🌿</span><p>Some seeds fell among thorns, where the thorns grew up and choked the plants</p></div>
+        <div class="soil-item"><span class="soil-icon">🌾</span><p>And lastly, some seed fell on good soil, where it produced 100, 60, or 30 times what was sown</p></div>
+      </div>
+
+      <p>This parable provides an amazing guide to what you need to consider before investing anything of value. I want you to understand something crucial: effort and hard work aren't what matters most—it's effort and hard work on the right thing placed under optimal conditions for growth.</p>
+    </div>
+
+    <span class="garden-highlight">Direction, direction, direction, direction is superior to speed. Only accelerate when you've 100% determined the direction.</span>
+
+    <p>Haha! Can you tell how passionate I am about this stuff? You cannot imagine how much I suffered feeling like the color grey when thinking about what impact my life had. Well, maybe you can imagine—but that's why I'm so seemingly repetitive with some of these things. Because it works! Why would I sit here watching you, my friends, suffer when I know the way out?</p>
+    <p>Don't let this be another day with another article. You deserve to have your heart filled with the gratitude of your world for giving it what it has been waiting for. You're not an extra on the set. On this planet, you're a leading character, and what we're trying to do is understand the script so you can kill it during your performance.</p>
+    <p>Ok, my splendid soapbox has been put away for now—we may continue with our lovely garden.</p>
+    <p>If you're interested in the full breakdown of the conditions the seed was tossed into, you can read further starting in verse 18, and the explanation continues through verse 23. For the point I'm making, we're just going to look at one of these explanations, but the principle remains the same.</p>
+    <p>In verse 22, Jesus explains that the seed that fell among thorns is like someone who received the perfect seed, but all the worries of life and get-rich-quick schemes choked out that seed, making it unfruitful.</p>
+    <p>Remember how we talked about what we give attention to being like water and nutrients? This is why split focus, anxiety, and distractions are so expensive. Sometimes you're harboring the perfect seed, idea, relationship... you name it. But because we're giving our resources to so many different focuses, that thing never yields results, leaving us thinking we must be doing the wrong thing. When all along it was the right thing, but with improper care.</p>
+    <p>You could die like the majority of people—never knowing, never tasting, never celebrating the reason and purpose for which you were born. Truly, your heart and its condition are the key to guiding your path. This book isn't your guide; this is merely me providing you the contact information and location of that guide: your heart.</p>
+    <p>Now, in the final example, we get to see the results of good soil. The results, when planted in good soil with favorable conditions, yield from a minimum of 30 times to a maximum of 100 times the investment.</p>
+    <p>Hey, what if you could 30x your income? What if you could 100x your productivity? Seems to me it's not only possible but a standard function engrained into your DNA—the ability to reproduce exponentially what you water.</p>
+    <p>See, you've mainly used that ability to 30x or 100x your fears and worries. It's by that same power that we can direct that energy toward something else. It's the same energy, and you've proven it works, thanks to all your fears, anxieties, and insecurities. You water and worry about them, so they pile up and grow... it works!</p>
+    <p>In fact, it works so well there are trillion-dollar industries making money based off of your ability to amplify your fears and concerns. If you really took the time to think about how much money you spend because of the things you worry about, fear, or are insecure about, you might just blush. Investing is good, investing in yourself though is perfect. It will never let you down.</p>
+    <p>This time, we're consciously choosing to water something different.</p>
+
+    <!-- ELEMENT 2: SUPPORT SYSTEM -->
+    <div class="condition-card">
+      <h4>2. The Support System: Optimizing Your Environment</h4>
+      <p>You're going to laugh at me for this, but I can't help it—this is just how I am. While writing the 2nd tip for growing conditions, it's actually supposed to be about water, but I love giving you the best parts as soon as possible. Since we've already touched on attention and water a little, I rewrote this just so you could have this tidbit now.</p>
+      <p>You should finish this whole chapter, of course, but even if you bail on it now, know you're getting the meaty stuff up front.</p>
+      <p>There are a lot of different things needed to optimize and further enhance the conditions a plant grows under. All these little things are what I would call the support system. Everything from manure to pruners. These are things that further enhance the conditions under which a plant grows.</p>
+      <p>Here's the thing, and it relates to our previous talk about poison even from a friend: You have to become vigilant about the people you allow around you when it's in your control. And I don't mean just people in your family, friend, or work groups. No, I mean even people you choose to listen to through media and its various forms.</p>
+      <p>It takes deliberate effort to nurture and grow what lies inside you. Every person has this amazing gift for themselves and the world just chilling dormant inside. But here's the issue—why are you expecting people that don't prioritize their own heart to prioritize yours?</p>
+      <p>It's not someone else's job to fulfill you and give you purpose or meaning. No, but it is that purpose and meaning you're meant to share with and celebrate with others. You need to vet the things being said to you and the environments you're being asked to be a part of. When it is in your control, place your heart in conditions optimal for it, not detrimental to it.</p>
+      <p>When you hop onto TikTok or YouTube, you'll notice that if you watch a lot of bullfighting videos, then you'll start getting recommended and presented a lot of content that's about bullfighting, or subjects related to bullfighting, maybe even travel guide videos to Spain because it appears to be the bullfighting capital.</p>
+      <p>See, even industry media giants like ByteDance and Google realize the power of immersing their users with more of what they're asking for. So much value in it that companies pay uncomfortable amounts for the chance to catch your attention while you're immersed in this world custom-made for what you like.</p>
+      <p>Here's a trick we can use to take advantage of this and further optimize the quality of our environment: Make a new email address and create a new TikTok, Instagram, YouTube, etc. But this time, teach the algorithm to only present you with things and content relevant to nurturing what's in your heart and where you're trying to go.</p>
+      <p>If, for example, you're passionate about charisma and this is something you're watering—the ability to capture and hold the room and people's attention through speech and body language—then for your entertainment, you might choose to watch TV shows like "Suits," immersing yourself with characters like Harvey Specter who shine when it comes to charisma.</p>
+      <p>What's my point? Make everything around you serve the seed you're watering. Your entertainment, your education, your friendships. You can't control everything—this is why it is so vital you optimize what you can control. Make every aspect of the environment you can control serve you.</p>
+    </div>
+
+    <!-- ELEMENT 3: WATER -->
+    <div class="condition-card">
+      <h4>3. The Water: Your Attention and Focus</h4>
+      <p>We've already talked quite a bit about how your attention is like water—whatever you focus on grows. But there's another aspect to this: the quality of your attention matters just as much as where you direct it.</p>
+      <p>Many of us are watering a hundred different plants with tiny droplets, wondering why nothing is flourishing. We're physically present in one place while mentally sprinkling our attention across a dozen different thoughts, worries, or distractions. This is like trying to grow plants with occasional misting—they might survive, but they'll never truly thrive.</p>
+      <p>The seeds in your heart garden need deep, consistent watering to develop strong roots and produce the kind of fruit we talked about earlier—that 30x to 100x return.</p>
+      <p>Here's how to improve the quality of your watering:</p>
+      <ul class="garden-list">
+        <li>Deep watering over shallow sprinkling: Focus intensely on one thing rather than spreading your attention thin</li>
+        <li>Create irrigation systems: Set up environments that naturally direct your attention where it needs to go. If you want to dive deeper into this concept, I highly recommend the book "Thinking in Systems" by Donella Meadows. She brilliantly explains how systems shape our behavior more than willpower ever could.</li>
+        <li>Clear blockages: Identify and remove distractions that divert your water to weeds</li>
+        <li>Schedule watering times: Dedicate specific blocks for focused attention on what matters most</li>
+        <li>Monitor the flow: Learn to recognize when your attention is being diverted and gently redirect it</li>
+      </ul>
+      <p>One watering technique that's been game-changing for me: I set a timer for just 25 minutes and commit to watering ONE area of my garden during that time. No checking my phone, no answering emails, no jumping to other plants. Just 25 minutes of deep watering in one specific spot. When the timer goes off, I take a 5-minute break, then either continue or move to another part of the garden.</p>
+      <p>Let me share a personal practice that's transformed my own garden. I've made it a point to never get on social media of any kind before 12pm. This is especially powerful on days when I have no appointments or commitments until after noon. Why? Because from the time I wake up till noon, the only thing I'm watering and giving attention to is what's in my heart. Before meeting the strangers of the world, I choose to meet with my own heart first.</p>
+      <p>This small change has produced incredible results. Those morning hours—when my mind is clearest, my willpower is strongest, and the world hasn't started making demands—become sacred time for tending what truly matters. By the time I do engage with the outside world, I'm operating from a place of connection with my authentic self rather than reacting to whatever happens to be trending that day.</p>
+      <p>And for those of you who believe in God, the saying is this: Meet God before you meet the devil. Do not venture out into the world or reach for your phone before you have met with and spent time with the Lord.</p>
+      <p>Remember Jesus' instruction to "pray that you do not fall into temptation"—and please don't cheapen temptation to mean only doing naughty things or dropping f-bombs. In the Bible, sin is defined as "missing the mark"—falling short of the target. So pray that you do not fall into the temptation of mediocrity.</p>
+      <p>Your Father is God, King of the universe. The expectations and power placed into His children—you and me—are incalculable. This is why it is absolutely vital you meet God before you meet the devil in the world. It will help you remain in a state of excellence in all that you do.</p>
+      <p>Try it. You'll be amazed at how much more growth happens with this focused watering than with hours of scattered misting across your entire garden.</p>
+    </div>
+
+    <!-- ELEMENT 4: PROTECTION -->
+    <div class="condition-card">
+      <h4>4. The Protection: Guarding Your Heart's Gate</h4>
+      <p>Remember what we discussed earlier? The mind is not the heart—it's the door, the filter, the gatekeeper to what enters your garden. This is why protection is so crucial.</p>
+      <p>In Proverbs 4:23, Solomon didn't casually suggest we should "pay attention" to our hearts. He said to guard it above all else—with vigilance, intentionality, and fierce protection. Why? Because everything you do flows from it.</p>
+      <p>Think about your mind as the fence surrounding your garden. Every thought, image, conversation, and experience must pass through this fence before it can take root in your heart. The question is: How strong and intentional is your fencing?</p>
+      <p>Many of us have fences full of holes. We allow any and every thought, worry, fear, or influence to stroll right into our garden, never questioning whether they belong there. Others have built rigid, impenetrable walls that keep out both harmful and helpful influences. Neither approach creates optimal growing conditions.</p>
+      <p>Healthy boundaries look like a well-maintained fence with gates that YOU control:</p>
+      <ul class="garden-list">
+        <li>Conscious consumption: Being deliberate about what media, conversations, and environments you expose yourself to</li>
+        <li>Thought filtering: Learning to recognize and redirect thoughts that don't serve your garden</li>
+        <li>Strategic ignorance: Deliberately choosing not to know certain things that would only create mental clutter</li>
+        <li>Sacred spaces: Creating physical and temporal boundaries where your garden is especially protected</li>
+        <li>Clear communication: Letting others know how and when they can access your attention</li>
+      </ul>
+      <p>One of the most powerful boundaries I've implemented is what I call the "mental doorman." Just as an exclusive building has someone at the door deciding who enters and who doesn't, I've trained myself to pause before allowing a thought to take residence in my mind.</p>
+      <p>When a thought knocks—especially a worrying, fearful, or negative one—I ask: "Does this thought serve my garden? Will allowing it in lead to fruit I want to harvest? Is it aligned with truth?"</p>
+      <p>If the answer is no, I don't try to force it away (which usually makes it knock louder). Instead, I acknowledge it: "I see you, but you don't get to come in right now." Then I redirect my attention to what I've intentionally chosen to grow.</p>
+      <p>But here's another crucial layer: your mental doorman doesn't just control what enters—it also guards what leaves. When someone is speaking to me or I'm having a conversation, I've become a lot slower in speaking and responding. I am truly trying to listen and think about what I'll say instead of just reacting. I want to be present and act as a doorman not only to what enters but also to what leaves my garden.</p>
+      <p>Jesus said, "Out of the abundance of the heart, the mouth speaks." He also taught that it's not what goes into a person that taints them—it's what comes out, because what comes out reveals the condition of their heart. This isn't just about words but actions too.</p>
+      <p>Yes, even those comments you leave online using burner accounts or even your main account. Those hurtful things you've said or done—they came from somewhere. We aren't here to run from what's inside. We're here to take ownership and account for what's there, and to begin planting what needs to be there instead.</p>
+      <p>No make-believe ideas here. I did and continue to do this work, and so do and will we all. The journey of tending your heart is lifelong, but each day of intentional care moves you closer to a garden that produces beautiful fruit.</p>
+      <p>Remember Jesus' words: "Don't throw your pearls to swine." This means that giving gold to something or someone that doesn't grasp its value isn't a fault on their part—it's on you. Value your own thoughts and opinions enough to not just throw them around for free. Invest your own thoughts and words with care. Vet also what leaves your garden.</p>
+      <p>Your mind is the gatekeeper of your heart. When you strengthen and intentionally operate this gate, you don't have to worry as much about weeding—because you're preventing weeds from entering in the first place.</p>
+    </div>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>Assessing Your Current Growing Conditions</h3>
+    <p>Now that we've covered the four elements of optimal growing conditions, let's take a moment to honestly assess your current environment:</p>
+
+    <div class="assessment">
+      <div class="assessment-item">
+        <h5>🌱 Soil Assessment</h5>
+        <p>How's the condition of your heart's soil? Are you planting seeds in the good soil that yields 30, 60, or 100 times what was sown, or are you unknowingly dropping precious seeds among thorns, on rocky ground, or by the wayside?</p>
+      </div>
+      <div class="assessment-item">
+        <h5>🤝 Support System Assessment</h5>
+        <p>What's surrounding and supporting the growth in your garden? Are your environments—both physical and digital—serving the seeds you want to grow? Are you intentionally curating influences that nurture rather than hinder your growth?</p>
+      </div>
+      <div class="assessment-item">
+        <h5>💧 Water Assessment</h5>
+        <p>Where is your attention flowing? Are you deeply watering a few important plants, or are you misting dozens of plants with scattered attention? Have you established protected morning hours to water what matters most before engaging with the world?</p>
+      </div>
+      <div class="assessment-item">
+        <h5>🛡️ Protection Assessment</h5>
+        <p>How well is your mind functioning as the gatekeeper of your heart? Are you actively filtering what enters, or is your fence full of holes? Have you established a "mental doorman" that evaluates thoughts before allowing them residence?</p>
+      </div>
+    </div>
+
+    <p>The purpose of this assessment isn't to make you feel bad about where you are. It's to help you identify specific areas where small, strategic adjustments could dramatically improve your growing conditions. Remember, this isn't about perfection—it's about direction and consistent improvement.</p>
+    <p>Write down one specific improvement you could make in each area. Then, instead of trying to change everything at once (which rarely works), choose the ONE adjustment that would have the greatest positive impact on your garden right now, and commit to implementing it this week.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>Seasonal Growing: Embracing Life's Rhythms</h3>
+    <p>Life is seasons, and you have to enter this adventure understanding that.</p>
+
+    <div class="season-row">
+      <div class="season-card winter">
+        <div class="icon">❄️</div>
+        <p>Sometimes it's winter and everything feels cold and unresponsive in life. Keep going—spring is coming.</p>
+      </div>
+      <div class="season-card summer">
+        <div class="icon">☀️</div>
+        <p>Sometimes it feels like you can do no wrong, everything is flourishing, and your world is packed with sunlight. But stay vigilant—winter is coming.</p>
+      </div>
+    </div>
+
+    <p>Understand that all life is subject to seasons. Seasons are not something you can control. Life happens, and things outside of your control can and will impact you, sometimes derailing your plans—but that's ok.</p>
+    <p>Life is seasons, and we don't control seasons, but we understand how they work and that they're only for a period. Never get disheartened or overconfident about the outcome of things outside your control. Have the wisdom to understand such things are part of seasons and enjoy the season while it is there, knowing fully that it is only for a time.</p>
+    <p>This perspective is liberating. It frees you from the pressure of trying to force summer-level productivity during a winter season, or expecting spring-like new growth when you're in a season of harvest. It gives you permission to adapt your gardening practices to what the season requires, rather than fighting against it.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>The Compounding Effect of Consistent Care</h3>
+    <p>Even as seasons change, one thing remains constant: the power of consistent care. Creating optimal growing conditions isn't about making dramatic, overnight changes to your environment. It's about making small, faithful improvements that compound over time.</p>
+    <p>Imagine improving the quality of your soil, support system, watering, and protection by just 1% each day. That might not sound like much, but after a year, your growing conditions would be 37 times better than where you started!</p>
+    <p>That's the power of compound growth. Small, daily choices about your heart's environment eventually create massive differences in results—regardless of what season you're in.</p>
+
+    <div class="challenge">
+      <div class="challenge-label">Your Challenge</div>
+      <h4>Your Growing Conditions Challenge</h4>
+      <p>For the next week, I want you to focus on just ONE aspect of your growing conditions that needs the most attention.</p>
+      <p>Is it your soil? Work on preparing your heart to receive and nurture good seeds. Is it your support system? Make one change to surround yourself with what serves your growth. Is it your watering? Establish a morning routine that prioritizes meeting with your heart before meeting the world. Is it your protection? Implement the "mental doorman" practice for both what enters and leaves your garden.</p>
+      <p>Remember, trying to change everything at once usually results in changing nothing permanently. Focus your energy on creating one optimal condition, and once that becomes natural, move to the next.</p>
+    </div>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>The Harvest</h3>
+    <p>As we bring our journey together to a close, let's talk about what all this gardening is really for—the harvest.</p>
+    <p>When you've done the work of weeding, planting authentic seeds, and creating optimal growing conditions, something beautiful begins to happen. Fruit appears. Not just any fruit, but fruit that is uniquely yours—the expression of who you truly are and what you were meant to bring to this world.</p>
+    <p>This fruit shows up in countless ways:</p>
+
+    <ul class="harvest-list">
+      <li>Peace that remains steady even when circumstances don't</li>
+      <li>Courage to pursue what truly matters to you</li>
+      <li>Creativity that flows from your authentic self</li>
+      <li>Relationships that nourish rather than drain</li>
+      <li>Work that feels meaningful, not just productive</li>
+      <li>A sense of purpose that goes beyond achievement</li>
+      <li>Joy that isn't dependent on everything going right</li>
+    </ul>
+
+    <p>The most remarkable thing about this fruit? It's not just for you. The world around you—your family, friends, coworkers, community—gets to taste it too. Your growth becomes their nourishment. Your authenticity gives them permission to discover their own. Your courage inspires theirs.</p>
+    <p>This is why tending your heart garden matters so much. It's never just about you. It's about what flows from you into the world.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>My Promise to You</h3>
+    <p>I promised at the beginning of this book that I wouldn't fill these pages with fluff, and I hope I've kept that promise. My aim has been to give you the essential, proven practices that will help you reclaim the garden of your heart—without overwhelming you with unnecessary complexity.</p>
+    <p>Here's what we've covered in our time together:</p>
+
+    <div class="summary-cards">
+      <div class="summary-card">
+        <h5>Introduction</h5>
+        <p>We identified the disconnect many of us feel between outward success and inner fulfillment. We established the heart as a garden that requires intentional tending, and we made the commitment to stop neglecting this vital terrain.</p>
+      </div>
+      <div class="summary-card">
+        <h5>Chapter 1: Weed Work</h5>
+        <p>We tackled the vital first step of identifying what's currently growing in your garden through meditation and awareness. We learned that before planting anything new, we must first recognize and begin removing the weeds that are choking our potential.</p>
+      </div>
+      <div class="summary-card">
+        <h5>Chapter 2: Seed Selection</h5>
+        <p>We explored how to choose what truly deserves your attention and nurturing. We distinguished between authenticity and borrowed preferences, and we learned to value content over packaging when deciding what to plant in our hearts.</p>
+      </div>
+      <div class="summary-card">
+        <h5>Chapter 3: Growing Conditions</h5>
+        <p>We've examined how to create the optimal environment for your authentic seeds to flourish. We've discovered the importance of good soil, effective support systems, focused watering of what matters, and protecting our garden with proper boundaries.</p>
+      </div>
+    </div>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>What You Can Expect</h3>
+    <p>When you begin implementing these practices—even imperfectly—here's what you can expect:</p>
+    <p>In the first weeks, you'll likely experience both resistance and relief. Resistance because your old patterns will fight to stay in place. Relief because there's something deeply right about reclaiming your heart's garden. This tension is normal and actually a sign that real change is beginning.</p>
+    <p>Within the first few months, you'll start noticing changes in how you respond to life's challenges. Instead of being immediately swept away by stress or others' expectations, you'll find yourself pausing—creating that space between stimulus and response where your freedom lies.</p>
+    <p>As you continue, you'll begin recognizing your authentic voice more clearly. Decision-making will become simpler (though not always easier) because you'll have a clearer sense of what aligns with your true self and what doesn't.</p>
+    <p>And over time, you'll discover that the fruit of your garden becomes increasingly natural and abundant. You won't have to force or fake it. Like a well-tended apple tree doesn't strain to produce apples, your heart won't strain to produce what it was designed for.</p>
+
+    <div class="section-break"><span>❧</span></div>
+
+    <h3>A Heartfelt Thank You</h3>
+    <p>I have to say, writing this book has been a blast—despite my cringe-worthy 80s movie metaphors and occasional soapbox moments. (See what I did there? Acknowledging my quirks before you can point them out. That's what we call strategic vulnerability, folks!)</p>
+    <p>But seriously, I'm genuinely grateful you've stayed with me throughout these pages. Your willingness to consider these ideas, to possibly implement them in your life, means the world to me. I know what it's like to feel like the color grey when thinking about your life's impact. I know the frustration of trying approach after approach, only to end up back where you started.</p>
+    <p>The practices in this book transformed my life, and my deepest hope is that they'll do the same for you. Not because they're magical or revolutionary, but because they're true. They align with how we're designed to function, how our hearts are meant to flourish.</p>
+    <p>This isn't goodbye—it's the beginning of your authentic journey. The real work starts now, as you close this book and begin applying these principles to your unique life and heart.</p>
+    <p>Thank you for letting me be part of your journey.</p>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="closing">
+    <svg style="position:relative;opacity:0.2;margin-bottom:28px" width="180" height="50" viewBox="0 0 180 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M90 45 C90 45 40 30 20 10 C10 0 5 0 0 2" stroke="#6B8F71" stroke-width="1.5" fill="none"/>
+      <path d="M90 45 C90 45 140 30 160 10 C170 0 175 0 180 2" stroke="#6B8F71" stroke-width="1.5" fill="none"/>
+      <ellipse cx="30" cy="15" rx="14" ry="8" transform="rotate(-30 30 15)" fill="#4A6741"/>
+      <ellipse cx="150" cy="15" rx="14" ry="8" transform="rotate(30 150 15)" fill="#4A6741"/>
+      <circle cx="90" cy="47" r="3" fill="#B8943F"/>
+    </svg>
+    <h2>Keep Weeding.<br>Keep Planting.<br>Keep Growing.</h2>
+    <p>Your garden is waiting. And so is the real you.</p>
+    <p class="sign-off">The Garden of Your Heart</p>
+  </div>
+</section>
+</div><!-- end .book -->
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.condition-card, .pull-quote, .verse, .challenge, .reward, .step, .assessment-item, .summary-card, .season-card').forEach(el => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
