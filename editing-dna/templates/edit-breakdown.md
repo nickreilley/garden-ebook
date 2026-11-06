@@ -20,7 +20,7 @@ You don't need to log every cut. Log the 15 to 30 decisions you'd defend to anot
 | Goal: what the viewer should **feel**, then **do** | |
 | The story in one sentence | |
 | Music (track, BPM) | |
-| Files (render, project export) | |
+| Files (render, Resolve timeline FCPXML) | |
 
 ## 1. Structure
 
@@ -42,7 +42,7 @@ You don't need to log every cut. Log the 15 to 30 decisions you'd defend to anot
 
 ## 3. Motion notes (if there are motion graphics)
 
-| Element | Signature move used | Duration (frames) | Easing (After Effects in/out influence %) | Delay between elements (frames) | Lands on (word / beat / sound hit) |
+| Element | Signature move used | Duration (frames) | Feel of the motion (your words) | Delay between elements (frames) | Lands on (word / beat / sound hit) |
 |---|---|---|---|---|---|
 | | | | | | |
 

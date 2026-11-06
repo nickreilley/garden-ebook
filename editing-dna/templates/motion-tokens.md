@@ -2,25 +2,29 @@
 
 A token is a named, fixed value that every animation reuses: "entrance curve", "standard duration", "stagger interval". Big design systems use tokens for motion so their products feel like one hand made them. This file does the same for you.
 
-**Fill this from your own After Effects graphs and timelines, not from tutorials.** If a value comes from a tutorial, it's someone else's style. Blanks are fine until Phase 3.
+**Every value here comes from your choices, never from a tutorial or a guess.** If a value comes from a tutorial, it's someone else's style. Blanks are fine until Phase 3.
 
 ---
 
-## How to read your easing out of After Effects
+## How we find your numbers: calibration
 
-1. Select a keyframe and press **Cmd/Ctrl + Shift + K** (Keyframe Velocity).
-2. Note the **outgoing influence** on the first keyframe and the **incoming influence** on the second. Also check whether the speed is 0.
-3. When both speeds are 0, convert to a cubic-bezier, which is the format Remotion and the web use:
+You don't need to know what an easing curve is. For each token:
 
-```
-cubic-bezier( out_influence / 100,  0,  1 − in_influence / 100,  1 )
-```
+1. I render the same clip several ways, labeled A, B, C… Each version changes just one thing: the amount, the speed or the curve.
+2. You pick the one that feels right and say what's wrong with the others ("too much", "too late", "feels cheap").
+3. The values behind your pick get written here, along with your words. From then on, "punchy zoom" means exactly those numbers and is never guessed again.
 
-For example, AE's Easy Ease (33.33% / 33.33%) converts to `cubic-bezier(0.333, 0, 0.667, 1)`.
-
-If a curve has overshoot or non-zero speeds, screenshot the Graph Editor (Shift+F3) with the value graph showing and I'll convert it. Overshoot can also be stored as a spring (damping / stiffness / mass).
+Your reasons for rejecting an option are as valuable as your pick.
 
 ---
+
+## Zooms (first calibration)
+
+| Name (your word) | Scale from → to (%) | Duration (frames) | Curve | Used for | Never used for | Your words |
+|---|---|---|---|---|---|---|
+| punchy | | | | | | |
+| smooth | | | | | | |
+| slow push | | | | | | |
 
 ## Frame rate(s)
 
@@ -30,7 +34,7 @@ If a curve has overshoot or non-zero speeds, screenshot the Graph Editor (Shift+
 
 ## Easing curves (3 at most, because fewer curves make a stronger signature)
 
-| Name | AE influence out → in | cubic-bezier | Used for | Never used for |
+| Name | Picked in calibration (test + label) | cubic-bezier | Used for | Never used for |
 |---|---|---|---|---|
 | | | | | |
 | | | | | |

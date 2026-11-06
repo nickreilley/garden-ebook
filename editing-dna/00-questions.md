@@ -1,5 +1,7 @@
 # Start here: questions
 
+> **Round 1 answered on 2026-11-06.** Your answers are in `sources/answers-round-1.md`, and the first draft built from them is in `style-bible.md`.
+
 Answer in whatever form is fastest: type it, dictate it, or ramble into a voice memo and paste the transcript. Rough answers are fine. Each one changes something concrete in the plan, and the note under each question says what.
 
 ---

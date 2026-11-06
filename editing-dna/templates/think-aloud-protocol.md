@@ -18,8 +18,8 @@ The gap between the two versions is your style in its purest form.
 
 ## Setup
 
-- Screen recording with your mic on. OBS works, and so do QuickTime or the Xbox Game Bar.
-- Keep the timeline and graph editor visible when you can.
+- Screen recording with your mic on. On your Mac, press **Cmd + Shift + 5**, open **Options**, and choose your microphone.
+- Keep the Resolve timeline and Inspector visible when you can.
 - Raw and unedited is fine. Don't make it nice.
 
 ## What to say out loud

@@ -27,7 +27,7 @@ Each of these is a decision. The AI picks the default and you pick something els
 
 ## 2. Two changes in approach
 
-**Claude stops being the animator and becomes the director.** You build the basic animations by hand (your text reveal, your transition, your lower third, your number counter), because that's where the life is. Claude decides which one to use, when, for how long, in what order and in sync with what. Over time each animation gets a few "life knobs" (overshoot, how uneven the delays are, hold length) that Claude can turn within limits you set. Senior motion designers work this way: they don't animate from nothing every time, they reuse a toolkit they built.
+**Nothing gets animated from scratch, and you never have to animate.** Every edit is built from a fixed toolkit of signature moves (your text reveal, your transition, your zoom, your number reveal) whose exact values you approved. You're the director: you describe what you want or point at a reference, I build versions, and you pick one and say why. Then, working as the editor, Claude decides which move to use, when, for how long, in what order and in sync with what. Over time each move gets a few "life knobs" (overshoot, how uneven the delays are, hold length) that Claude can turn within limits you set. Film directors work this way with animators: they never touch a keyframe, but they own every decision.
 
 **Your taste gets turned into data.** We capture your style three ways:
 
@@ -67,14 +67,16 @@ Layer 1 is packaged as a **Claude skill**: a folder with a `SKILL.md` file and r
 - It runs without anyone sitting at editing software, which is what a client agent needs.
 - Your signature moves become reusable components with your exact curves built in.
 - Audio can be analyzed down to the exact frame of each hit, so motion lands where you would land it.
-- Workflow: design each signature move in After Effects, where your hands are fast, then we rebuild it in Remotion with identical values.
+- Workflow: you describe a move or point at a reference, I build options, you pick. The values you pick get locked in.
+- **Client videos:** Remotion renders the whole finished video (footage, graphics, zooms, captions and sound), so agents can deliver without anyone opening editing software.
+- **Your own Resolve edits:** graphics render as transparent ProRes 4444 clips that you drop onto the Resolve timeline.
 - Check Remotion's license terms once you bill clients for work made with it.
 
-*If you'd rather stay in After Effects:* use your own templates, plus scripts Claude writes to fill them in and set the timing. You stay in software you know, but After Effects has to be running on a machine, so the agent can't work as independently.
+*Later option:* Fusion templates, so graphics stay editable inside Resolve. This isn't the starting point, because client agents need to render without anyone sitting at the software.
 
 **Cinematic and story edits → paper edit + timeline file.**
 - Claude works from transcripts and shot logs to build the structure and a cut list.
-- It then writes a timeline file (FCPXML / XML) that opens in Resolve or Premiere as a rough cut, and you finesse it.
+- It then writes a timeline file (FCPXML) that opens in Resolve as a rough cut, and you finesse it.
 - Story structure and picking selects are where Claude helps first. The feel of the final trim stays with you the longest.
 
 **Supporting tools**
@@ -89,8 +91,9 @@ Layer 1 is packaged as a **Claude skill**: a folder with a `SKILL.md` file and r
 Your storytelling and cinematic instincts already exist; they just aren't written down.
 - Pick your 5 best edits. For each one, send:
   - the final render
-  - the project export (XML, or the After Effects project)
+  - the Resolve timeline export (FCPXML; see `sending-files.md`)
   - a filled-in `templates/edit-breakdown.md`
+- Break down 5 to 10 motion graphics you love from other creators. You explain *why* each one works, which is your strength. I measure *how*: frame counts, scale amounts and timing.
 - Record 3 sessions of yourself talking while you edit (`templates/think-aloud-protocol.md`). Include one "deliberate default" exercise.
 - Fill in `templates/reference-board.md`: 10 videos you love and 10 you hate, with reasons.
 - Gather your failed AI attempts and note exactly what was wrong with each.
@@ -98,7 +101,8 @@ Your storytelling and cinematic instincts already exist; they just aren't writte
 I'll then pull the numbers, patterns and principles into a first draft of the style bible. You mark every line right, wrong, or "sort of".
 
 ### Phase 2: Design the motion signature (about 2 to 3 weeks)
-The motion graphics style doesn't exist yet, so we can't extract it. It has to be designed, and **you have to design it.** If I design it, it's my taste, which means the average again. My job in this phase is to push back on ideas and generate tests.
+The motion graphics style doesn't exist yet, so we can't extract it. It has to be designed, and **you have to design it.** If I design it, it's my taste, which means the average again. You don't need animation skills for this, only judgment. My job in this phase is to be your hands: I push back on ideas and build the options you choose from.
+- **Calibrate the basics first, starting with zooms.** I render the same clip with a range of options (zoom amount, speed and curve). You pick which one is "punchy" and which is "smooth", and those numbers become the permanent definition of each word. This is the fix for zooms that went overboard.
 - Describe your motion personality in one sentence, ideally as a physical material (paper, steel, liquid, film stock, magnet). A material comparison settles hundreds of later decisions.
 - Set your constraints:
   - 2 to 3 easing curves at most
@@ -109,8 +113,7 @@ The motion graphics style doesn't exist yet, so we can't extract it. It has to b
   - 1 signature sound
 
   Styles become recognizable by repeating a few distinctive decisions, not by doing a lot of different things.
-- Build 6 to 10 signature moves by hand in After Effects. These are the most valuable part of the whole system.
-- I render variations of each one in code. You pick and reject, and every choice gets logged with a reason.
+- **Direct 6 to 10 signature moves.** You describe the ideas in your head or point at references, I build versions of each, and you pick and reject. Every choice gets logged with a reason. These moves are the most valuable part of the whole system.
 
 ### Phase 3: Write it down and build it (about 2 weeks)
 - Fill `templates/motion-tokens.md` with real numbers.
@@ -138,6 +141,9 @@ One brand file per client (`templates/client-brand.md`) plus the skill makes an 
 editing-dna/
   README.md                       this plan
   00-questions.md                 answer these first
+  style-bible.md                  the live style bible (draft v0.1, needs your marks)
+  sending-files.md                how to export from Resolve under 30 MB
+  sources/                        your raw answers and recordings, unedited
   templates/
     edit-breakdown.md             the "why" behind one finished edit
     think-aloud-protocol.md       recording yourself while you edit

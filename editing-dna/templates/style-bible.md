@@ -22,7 +22,7 @@ Format: **I believe ___, so I ___, which is why I never ___.**
 
 ## Signature moves
 
-These are the hand-built animations that carry the life (see README §2).
+This is the fixed toolkit of animations whose values you approved in calibration (see README §2).
 
 | Name | What it is | When to use | When never | Life knobs and their limits | File / component | Why it exists |
 |---|---|---|---|---|---|---|
