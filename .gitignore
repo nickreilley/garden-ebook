@@ -1,0 +1,8 @@
+# Editing DNA: video and media files stay on your computer and are never pushed to GitHub
+editing-dna/media/*
+!editing-dna/media/README.md
+*.mov
+*.mp4
+*.mxf
+*.braw
+*.r3d

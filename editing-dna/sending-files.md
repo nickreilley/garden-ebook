@@ -1,4 +1,14 @@
-# Sending files (30 MB limit in cloud sessions)
+# Sending files
+
+## Working locally on your Mac (recommended)
+
+There's no size limit locally. Export at full quality and drop files into `media/` (see `media/README.md`). Never change the frame rate, because timing is measured in frames.
+
+The rest of this page only applies to cloud sessions, which have a 30 MB upload limit.
+
+---
+
+## Cloud sessions (30 MB limit)
 
 To analyze an edit I need accurate timing, not picture quality, so small exports work fine. **Never change the frame rate**: timing is measured in frames.
 
